@@ -1,0 +1,23 @@
+name: Unzip Source Files
+on:
+  push:
+    paths:
+      - 'ddbz5e-rpg-companion-source.zip'
+
+permissions:
+  contents: write
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract zip and clean up
+        run: |
+          unzip -o ddbz5e-rpg-companion-source.zip
+          git rm ddbz5e-rpg-companion-source.zip
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -m "Extract DDBZ 5e system files"
+          git push
